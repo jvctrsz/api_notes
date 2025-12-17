@@ -16,6 +16,8 @@ import { FindOneUserService } from './services/find-one-user/find-one-user.servi
 import { DeleteUserService } from './services/delete-user/delete-user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateUserService } from './services/update-user/update-user.service';
+import { ChangePasswordService } from './services/change-password/change-password.service';
+import { ChangePasswordDto } from './dto/change-password-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -25,15 +27,14 @@ export class UserController {
     private readonly findOneUser: FindOneUserService,
     private readonly deleteUser: DeleteUserService,
     private readonly updateUser: UpdateUserService,
+    private readonly changePasswordUser: ChangePasswordService,
   ) {}
 
-  @HttpCode(HttpStatus.CREATED)
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.createUser.create(createUserDto);
   }
 
-  @HttpCode(HttpStatus.CREATED)
   @Put(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.updateUser.update(+id, updateUserDto);
@@ -52,5 +53,14 @@ export class UserController {
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.deleteUser.delete(+id);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post()
+  changePassword(
+    @Param() id: string,
+    @Body() changePasswordDto: ChangePasswordDto,
+  ) {
+    return this.changePasswordUser.changePassword(+id, changePasswordDto);
   }
 }

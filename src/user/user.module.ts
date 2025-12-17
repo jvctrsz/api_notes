@@ -6,6 +6,7 @@ import { FindOneUserService } from './services/find-one-user/find-one-user.servi
 import { FindAllUserService } from './services/find-all-user/find-all-user.service';
 import { DeleteUserService } from './services/delete-user/delete-user.service';
 import { HashFunctions } from 'src/functions/hashPassword';
+import { ChangePasswordService } from './services/change-password/change-password.service';
 
 @Module({
   controllers: [UserController],
@@ -16,6 +17,7 @@ import { HashFunctions } from 'src/functions/hashPassword';
     FindAllUserService,
     DeleteUserService,
     HashFunctions,
+    ChangePasswordService,
   ],
 })
 export class UserModule {}
