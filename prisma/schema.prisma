@@ -13,3 +13,50 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model User {
+  id         Int      @unique @default(autoincrement())
+  username   String   @unique
+  password   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  notes      Notes[]
+}
+
+model Categories {
+  id     Int     @unique @default(autoincrement())
+  name   String
+  active Boolean @default(true)
+  notes  Notes[]
+}
+
+model Notes {
+  id          Int         @unique @default(autoincrement())
+  title       String      @db.VarChar(150)
+  description String      @db.VarChar(1000)
+  status      Status      @default(created)
+  isFavorite  Boolean     @default(false)
+  tag         String[]
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  deleted_at  DateTime?
+  user_id     Int
+  user        User        @relation(references: [id], fields: [user_id])
+  category_id Int
+  categories  Categories  @relation(references: [id], fields: [category_id])
+  histories   Histories[]
+}
+
+model Histories {
+  id       Int      @unique @default(autoincrement())
+  history  String
+  notes_id Int
+  notes    Notes    @relation(references: [id], fields: [notes_id])
+  date     DateTime @default(now())
+}
+
+enum Status {
+  created
+  finished
+  deleted
+}
