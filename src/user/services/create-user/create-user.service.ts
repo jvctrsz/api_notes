@@ -1,5 +1,5 @@
 import { ConflictException, Injectable } from '@nestjs/common';
-import { HashFunctions } from 'src/functions/hashPassword';
+import { HashFunctions } from '../../../functions/hashPassword';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 

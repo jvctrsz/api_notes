@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { AuthLoginDto } from '../dto/auth-login.dto';
 import { verify } from 'argon2';
+import { AuthLoginDto } from 'src/auth/dto/auth-login.dto';
 import { FindOneUserService } from 'src/user/services/find-one-user/find-one-user.service';
 
 const message = 'Credenciais inválidas.';
