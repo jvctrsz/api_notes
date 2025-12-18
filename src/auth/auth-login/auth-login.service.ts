@@ -1,27 +1,22 @@
-import {
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthLoginDto } from '../dto/auth-login.dto';
 import { verify } from 'argon2';
+import { FindOneUserService } from 'src/user/services/find-one-user/find-one-user.service';
 
 const message = 'Credenciais inválidas.';
 
 @Injectable()
 export class AuthLoginService {
   constructor(
-    private readonly prisma: PrismaService,
+    private readonly findOneService: FindOneUserService,
     private readonly jwtService: JwtService,
   ) {}
   async authLogin(authLoginDto: AuthLoginDto) {
     const { password, username } = authLoginDto;
-    const user = await this.prisma.user.findUnique({ where: { username } });
+    const user = await this.findOneService.findOne({ username }, false, true);
     if (!user) throw new UnauthorizedException(message);
-
-    const isValidPassword = verify(password, user.password);
+    const isValidPassword = await verify(user.password, password);
     if (!isValidPassword) throw new UnauthorizedException(message);
 
     const payload = { id: user.id, username: user.username };

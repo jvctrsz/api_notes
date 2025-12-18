@@ -9,7 +9,7 @@ export class DeleteUserService {
     private findOneUser: FindOneUserService,
   ) {}
   async delete(id: number) {
-    const user = await this.findOneUser.findOne(id);
+    const user = await this.findOneUser.findOne({ id });
     if (!user) throw new NotFoundException('Usuário não encontrado.');
     await this.prisma.user.delete({ where: { id } });
     return { message: 'Usuário deletado com sucesso.' };

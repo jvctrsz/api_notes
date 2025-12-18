@@ -18,7 +18,7 @@ export class ChangePasswordService {
     private hashFunctions: HashFunctions,
   ) {}
   async changePassword(id: number, changePasswordDto: ChangePasswordDto) {
-    const user = await this.findOneUser.findOne(id, false);
+    const user = await this.findOneUser.findOne({ id }, false);
     if (!user) throw new NotFoundException('Usuário não encontrado.');
 
     const { confirma_senha, nova_senha, senha_atual } = changePasswordDto;

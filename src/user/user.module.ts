@@ -9,6 +9,7 @@ import { HashFunctions } from 'src/functions/hashPassword';
 import { ChangePasswordService } from './services/change-password/change-password.service';
 
 @Module({
+  exports: [FindOneUserService],
   controllers: [UserController],
   providers: [
     CreateUserService,

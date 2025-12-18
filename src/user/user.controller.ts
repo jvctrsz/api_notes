@@ -47,7 +47,7 @@ export class UserController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.findOneUser.findOne(+id);
+    return this.findOneUser.findOne({ id: +id });
   }
 
   @Delete(':id')

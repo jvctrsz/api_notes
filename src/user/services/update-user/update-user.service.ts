@@ -14,12 +14,13 @@ export class UpdateUserService {
     private findOneUser: FindOneUserService,
   ) {}
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const user = await this.findOneUser.findOne(id);
+    const user = await this.findOneUser.findOne({ id });
     if (!user) throw new NotFoundException('Usuário não encontrado.');
 
     const { username } = updateUserDto;
-    const hasSameName = await this.prisma.user.findUnique({
-      where: { username, AND: { id: { not: id } } },
+    const hasSameName = await this.findOneUser.findOne({
+      username,
+      AND: { id: { not: id } },
     });
     if (!!hasSameName)
       throw new ConflictException('Já existe um usuário com este nome.');
