@@ -23,7 +23,7 @@ export class ChangePasswordService {
 
     const { confirma_senha, nova_senha, senha_atual } = changePasswordDto;
 
-    const checkCurrent = await verify(senha_atual, user.password);
+    const checkCurrent = await verify(user.password, senha_atual);
     if (!checkCurrent) throw new ConflictException('Senha atual inválida.');
     if (nova_senha === senha_atual)
       throw new BadRequestException(

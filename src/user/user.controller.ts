@@ -18,6 +18,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateUserService } from './services/update-user/update-user.service';
 import { ChangePasswordService } from './services/change-password/change-password.service';
 import { ChangePasswordDto } from './dto/change-password-user.dto';
+import { User } from 'src/Decorators';
 
 @Controller('user')
 export class UserController {
@@ -56,9 +57,9 @@ export class UserController {
   }
 
   @HttpCode(HttpStatus.OK)
-  @Post()
+  @Post('change-password')
   changePassword(
-    @Param() id: string,
+    @User() id: string,
     @Body() changePasswordDto: ChangePasswordDto,
   ) {
     return this.changePasswordUser.changePassword(+id, changePasswordDto);
