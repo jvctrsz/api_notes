@@ -17,7 +17,7 @@ export class UpdateUserService {
     const user = await this.findOneUser.findOne({ id });
     if (!user) throw new NotFoundException('Usuário não encontrado.');
 
-    const { username } = updateUserDto;
+    const { username, name } = updateUserDto;
     const hasSameName = await this.findOneUser.findOne({
       username,
       AND: { id: { not: id } },
@@ -27,7 +27,7 @@ export class UpdateUserService {
 
     const updated = await this.prisma.user.update({
       where: { id },
-      data: { username },
+      data: { username, name },
       omit: { password: true },
     });
     return updated;

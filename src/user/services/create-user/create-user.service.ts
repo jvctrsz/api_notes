@@ -10,13 +10,13 @@ export class CreateUserService {
     private hashFunctions: HashFunctions,
   ) {}
   async create(createUserDto: CreateUserDto) {
-    const { username, password } = createUserDto;
+    const { username, password, name } = createUserDto;
     const user = await this.prisma.user.findUnique({ where: { username } });
     if (!!user) throw new ConflictException('Usuário já cadastrado.');
 
     const hashed = await this.hashFunctions.hashPassword(password);
     const created = await this.prisma.user.create({
-      data: { username, password: hashed },
+      data: { username, password: hashed, name },
       omit: { password: true },
     });
     return created;
