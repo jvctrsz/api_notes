@@ -15,6 +15,8 @@ import { FindOneCategoryService } from './services/find-one-category/find-one-ca
 import { FindAllCategoryService } from './services/find-all-category/find-all-category.service';
 import { DeleteCategoryService } from './services/delete-category/delete-category.service';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { ActiveCategoryService } from './services/active-category/active-category.service';
+import { DeactiveCategoryService } from './services/deactive-category/deactive-category.service';
 
 @Controller('categories')
 export class CategoriesController {
@@ -24,6 +26,8 @@ export class CategoriesController {
     private findOneCategoryService: FindOneCategoryService,
     private findAllCategoryService: FindAllCategoryService,
     private deleteCategoryService: DeleteCategoryService,
+    private activeCategoryService: ActiveCategoryService,
+    private deactiveCategoryService: DeactiveCategoryService,
   ) {}
 
   @Post()
@@ -52,5 +56,15 @@ export class CategoriesController {
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) id: number) {
     return this.deleteCategoryService.delete(id);
+  }
+
+  @Post('/active/:id')
+  active(@Param('id', ParseIntPipe) id: number) {
+    return this.activeCategoryService.active(id);
+  }
+
+  @Post('/deactive/:id')
+  deactive(@Param('id', ParseIntPipe) id: number) {
+    return this.deactiveCategoryService.deactive(id);
   }
 }
