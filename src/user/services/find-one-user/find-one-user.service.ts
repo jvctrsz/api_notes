@@ -11,8 +11,8 @@ export class FindOneUserService {
     ignoreValidation = false,
   ) {
     const users = await this.prisma.user.findUnique({
-      where: userWhereUniqueInput,
-      omit: { password: omitPassword },
+      where: { ...userWhereUniqueInput, AND: { isDeleted: { equals: false } } },
+      omit: { password: omitPassword, isDeleted: true, deleted_at: true },
     });
     if (!users && !ignoreValidation)
       throw new NotFoundException('Usuário não encontrado.');

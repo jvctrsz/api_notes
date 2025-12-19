@@ -9,12 +9,14 @@ datasource db {
 }
 
 model User {
-  id         Int      @unique @default(autoincrement())
-  username   String   @unique
+  id         Int       @unique @default(autoincrement())
+  username   String    @unique
   password   String
-  name       String   @db.VarChar(150)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  name       String    @db.VarChar(150)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  isDeleted  Boolean   @default(false)
+  deleted_at DateTime?
   notes      Notes[]
 }
 

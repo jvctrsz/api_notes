@@ -11,7 +11,13 @@ export class DeleteUserService {
   async delete(id: number) {
     const user = await this.findOneUser.findOne({ id });
     if (!user) throw new NotFoundException('Usuário não encontrado.');
-    await this.prisma.user.delete({ where: { id } });
+    await this.prisma.user.update({
+      where: { id },
+      data: {
+        isDeleted: true,
+        deleted_at: new Date(),
+      },
+    });
     return { message: 'Usuário deletado com sucesso.' };
   }
 }
